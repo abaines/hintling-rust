@@ -7,41 +7,70 @@ This is a minimal starter project using Yew (a Rust framework for building web a
 
 ![Yew+Trunk Starter Screenshot](https://github.com/user-attachments/assets/318866a0-1837-4990-af6a-e099df152b1e)
 
-### Prerequisites
+### Development environment: GitHub Codespaces / Dev Container (Ubuntu 24.04)
 
-1. Install Rust: https://rustup.rs/
-2. Add WebAssembly target:
-   ```bash
-   rustup target add wasm32-unknown-unknown
-   ```
-3. Install Trunk:
-   ```bash
-   cargo install trunk
-   ```
+If you see `bash: rustup: command not found` inside your Codespace, Rust is not installed in the container. Use the steps below to install Rust and the required tooling inside a GitHub Codespace or any Ubuntu 24.04 dev container.
 
-### Development
+1. Update packages and install build prerequisites:
+```bash
+sudo apt update
+sudo apt install -y build-essential curl pkg-config libssl-dev
+```
 
-To run the development server with hot-reload:
+2. Install rustup (the official Rust toolchain installer) and add Cargo to your shell environment:
+```bash
+curl --proto 'https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source $HOME/.cargo/env
+```
+If you open a fresh terminal in Codespaces the environment will usually be loaded automatically. If not, re-run the `source` line or reload the shell.
 
+3. Add the WebAssembly target required by Yew/Trunk:
+```bash
+rustup target add wasm32-unknown-unknown
+```
+
+4. Install Trunk (the build/serve tool for Yew WASM apps):
+```bash
+cargo install trunk
+```
+
+(Optional) Install `wasm-opt` from the binary releases (recommended for smaller release bundles). On Ubuntu you can install `binaryen` or download `wasm-opt` from the Binaryen project.
+
+### Development (hot-reload)
+
+Run the dev server (hot reload):
 ```bash
 trunk serve
 ```
 
-This will start a local server at `http://127.0.0.1:8080` (or another port if 8080 is busy).
+Trunk will serve the app using `index.html` and the wasm build from `src/main.rs`. By default it listens on `http://127.0.0.1:8080`.
 
 ### Building for Production
 
-To build the project for production:
-
+Build an optimized production bundle:
 ```bash
 trunk build --release
 ```
 
-The output will be in the `dist/` directory.
+The output will be written to the `dist/` directory.
+
+### Quick "Try it" (Codespaces)
+
+1. Open the Codespace terminal.
+2. Run the install steps above (rustup + trunk).
+3. Start the dev server:
+```bash
+trunk serve --open
+```
+This will start the server and open a browser preview in Codespaces (if available).
 
 ### Project Structure
 
 - `src/main.rs` - Main application code with Yew components
 - `index.html` - HTML template for Trunk
 - `Cargo.toml` - Rust project dependencies and configuration
+
+---
+
+If you'd like, I can also add a `.devcontainer/devcontainer.json` with the recommended packages preinstalled so Codespaces comes ready-to-use. Reply if you'd like that created.
 
