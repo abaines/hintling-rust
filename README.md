@@ -30,11 +30,7 @@ Replace the `EXPECTED_SHA256` value with the checksum published on the official 
 # download the installer into /tmp
 curl -fsSLo /tmp/sh.rustup.rs https://sh.rustup.rs
 
-EXPECTED_SHA256="17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
-
-# create a checksum file and verify
-echo "$EXPECTED_SHA256  /tmp/sh.rustup.rs" > /tmp/sh.rustup.rs.sha256
-sha256sum -c /tmp/sh.rustup.rs.sha256
+sha256sum -c sh.rustup.rs.sha256
 
 # if the checksum matches, run the installer
 sh /tmp/sh.rustup.rs -y
