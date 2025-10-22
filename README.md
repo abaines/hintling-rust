@@ -20,10 +20,26 @@ sudo apt update
 sudo apt install -y build-essential curl pkg-config libssl-dev
 ```
 
-2. Install rustup (the official Rust toolchain installer) and add Cargo to your shell environment:
+2. Install rustup (the official Rust toolchain installer) and add Cargo to your shell environment.
+
+For better security, download the installer, verify its checksum, then run it.
+The example below uses SHA256.
+Replace the `EXPECTED_SHA256` value with the checksum published on the official Rust website before running.
 
 ```bash
-curl --proto 'https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+# download the installer into /tmp
+curl -fsSLo /tmp/sh.rustup.rs https://sh.rustup.rs
+
+EXPECTED_SHA256="17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
+
+# create a checksum file and verify
+echo "$EXPECTED_SHA256  /tmp/sh.rustup.rs" > /tmp/sh.rustup.rs.sha256
+sha256sum -c /tmp/sh.rustup.rs.sha256
+
+# if the checksum matches, run the installer
+sh /tmp/sh.rustup.rs -y
+
+# enable cargo in the current shell
 source $HOME/.cargo/env
 ```
 
