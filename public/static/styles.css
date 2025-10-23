@@ -94,6 +94,14 @@ html, body, #root {
   justify-content: center;
 }
 
+.word-display {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
 .center-bottom {
   height: 20%;
   display: flex;

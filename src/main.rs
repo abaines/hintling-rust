@@ -4,12 +4,15 @@ use gloo_timers::callback::Interval;
 use std::rc::Rc;
 use std::cell::RefCell;
 
+mod word_picker;
+
 #[function_component(App)]
 fn app() -> Html {
     let skipped = use_state(|| 0u32);
     let correct = use_state(|| 0u32);
     let timer = use_state(|| 0u32); // Timer in tenths of seconds
     let timer_handle = use_mut_ref(|| None::<Rc<RefCell<u32>>>);
+    let current_word = use_state(|| word_picker::get_random_word());
 
     {
         // Timer that increments every 100ms (tenth of a second)
@@ -35,18 +38,22 @@ fn app() -> Html {
     let on_correct = {
         let correct = correct.clone();
         let skipped = skipped.clone();
+        let current_word = current_word.clone();
         Callback::from(move |_| {
             correct.set(*correct + 1);
             console::log_1(&format!("Skipped: {} | Correct: {}", *skipped, *correct + 1).into());
+            current_word.set(word_picker::get_random_word());
         })
     };
 
     let on_skip = {
         let skipped = skipped.clone();
         let correct = correct.clone();
+        let current_word = current_word.clone();
         Callback::from(move |_| {
             skipped.set(*skipped + 1);
             console::log_1(&format!("Skipped: {} | Correct: {}", *skipped + 1, *correct).into());
+            current_word.set(word_picker::get_random_word());
         })
     };
 
@@ -67,10 +74,10 @@ fn app() -> Html {
                         <div class="timer">{ format!("{:.1}", *timer as f32 / 10.0) }</div>
                     </div>
 
-                    // Middle section: Game content placeholder
+                    // Middle section: Current word display
                     <div class="center-middle">
-                        <div>
-                            <h1>{ "Hintling 🔤!" }</h1>
+                        <div class="word-display">
+                            { *current_word }
                         </div>
                     </div>
 
