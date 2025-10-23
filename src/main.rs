@@ -70,8 +70,7 @@ fn app() -> Html {
                     // Middle section: Game content placeholder
                     <div class="center-middle">
                         <div>
-                            <h1>{ "Hello from Yew!" }</h1>
-                            <p>{ "This is a minimal Yew+Trunk starter." }</p>
+                            <h1>{ "Hintling 🔤!" }</h1>
                         </div>
                     </div>
 
