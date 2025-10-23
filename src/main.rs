@@ -1,11 +1,14 @@
 use yew::prelude::*;
 use web_sys::console;
 use gloo_timers::callback::Interval;
+use std::rc::Rc;
+use std::cell::RefCell;
 
 #[function_component(App)]
 fn app() -> Html {
     let counter = use_state(|| 0i32);
     let timer = use_state(|| 0u32); // Timer in tenths of seconds
+    let timer_handle = use_mut_ref(|| None::<Rc<RefCell<u32>>>);
 
     {
         // Log to the browser console whenever the counter changes
@@ -22,11 +25,16 @@ fn app() -> Html {
     {
         // Timer that increments every 100ms (tenth of a second)
         let timer = timer.clone();
+        let timer_value = Rc::new(RefCell::new(0u32));
+        *timer_handle.borrow_mut() = Some(timer_value.clone());
+        
         use_effect_with(
             (),
             move |_| {
                 let interval = Interval::new(100, move || {
-                    timer.set(*timer + 1);
+                    let mut val = timer_value.borrow_mut();
+                    *val += 1;
+                    timer.set(*val);
                 });
                 
                 // Return cleanup function that cancels the interval
