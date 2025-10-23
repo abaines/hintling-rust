@@ -33,16 +33,16 @@ fn app() -> Html {
 
     html! {
         // Make the app area fill the viewport with zero padding/margin so side buttons can touch edges
-        <div style="font-family: Arial, sans-serif; padding: 0; margin: 0; width: 100vw; height: 100vh; box-sizing: border-box;">
+        <div class="app-container">
 
-            <div style="display: flex; width: 100%; height: 100%;">
+            <div class="row">
                 // Left column — 20% width, button fills the whole column
-                <div style="width: 20%; display: flex; align-items: center; justify-content: center;">
-                    <button style="width: 100%; height: 100%; font-size: 24px; padding: 12px 16px; display:flex; align-items:center; justify-content:center;" onclick={on_dec.clone()}>{ "←" }</button>
+                <div class="side-col">
+                    <button class="side-button" onclick={on_dec.clone()}>{ "←" }</button>
                 </div>
 
                 // Center column — take remaining space, center the counter
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                <div class="center-col">
                     <div style="text-align: center;">
                         <h1 style="margin: 0; padding: 12px 0 8px 0;">{ "Hello from Yew!" }</h1>
                         <p style="margin: 0 0 12px 0;">{ "This is a minimal Yew+Trunk starter." }</p>
@@ -51,8 +51,8 @@ fn app() -> Html {
                 </div>
 
                 // Right column — 20% width, button fills the whole column
-                <div style="width: 20%; display: flex; align-items: center; justify-content: center;">
-                    <button style="width: 100%; height: 100%; font-size: 24px; padding: 12px 16px; display:flex; align-items:center; justify-content:center;" onclick={on_inc.clone()}>{ "→" }</button>
+                <div class="side-col">
+                    <button class="side-button" onclick={on_inc.clone()}>{ "→" }</button>
                 </div>
             </div>
         </div>
