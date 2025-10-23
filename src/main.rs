@@ -34,17 +34,19 @@ fn app() -> Html {
 
     let on_correct = {
         let correct = correct.clone();
+        let skipped = skipped.clone();
         Callback::from(move |_| {
             correct.set(*correct + 1);
-            console::log_1(&format!("Correct: {}", *correct + 1).into());
+            console::log_1(&format!("Skipped: {} | Correct: {}", *skipped, *correct + 1).into());
         })
     };
 
     let on_skip = {
         let skipped = skipped.clone();
+        let correct = correct.clone();
         Callback::from(move |_| {
             skipped.set(*skipped + 1);
-            console::log_1(&format!("Skipped: {}", *skipped + 1).into());
+            console::log_1(&format!("Skipped: {} | Correct: {}", *skipped + 1, *correct).into());
         })
     };
 
