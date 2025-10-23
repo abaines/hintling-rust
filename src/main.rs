@@ -43,10 +43,10 @@ fn app() -> Html {
 
                 // Center column — take remaining space, center the counter
                 <div class="center-col">
-                    <div style="text-align: center;">
-                        <h1 style="margin: 0; padding: 12px 0 8px 0;">{ "Hello from Yew!" }</h1>
-                        <p style="margin: 0 0 12px 0;">{ "This is a minimal Yew+Trunk starter." }</p>
-                        <strong style="font-size: 20px;">{ format!("Count: {}", *counter) }</strong>
+                    <div class="center-content">
+                        <h1>{ "Hello from Yew!" }</h1>
+                        <p>{ "This is a minimal Yew+Trunk starter." }</p>
+                        <strong>{ format!("Count: {}", *counter) }</strong>
                     </div>
                 </div>
 
