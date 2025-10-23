@@ -6,21 +6,10 @@ use std::cell::RefCell;
 
 #[function_component(App)]
 fn app() -> Html {
-    let counter = use_state(|| 0i32);
+    let skipped = use_state(|| 0u32);
+    let correct = use_state(|| 0u32);
     let timer = use_state(|| 0u32); // Timer in tenths of seconds
     let timer_handle = use_mut_ref(|| None::<Rc<RefCell<u32>>>);
-
-    {
-        // Log to the browser console whenever the counter changes
-        let counter_val = *counter;
-        use_effect_with(
-            counter_val,
-            move |c| {
-                console::log_1(&format!("Counter changed: {}", *c).into());
-                || ()
-            },
-        );
-    }
 
     {
         // Timer that increments every 100ms (tenth of a second)
@@ -43,17 +32,19 @@ fn app() -> Html {
         );
     }
 
-    let on_inc = {
-        let counter = counter.clone();
+    let on_correct = {
+        let correct = correct.clone();
         Callback::from(move |_| {
-            counter.set(*counter + 1);
+            correct.set(*correct + 1);
+            console::log_1(&format!("Correct: {}", *correct + 1).into());
         })
     };
 
-    let on_dec = {
-        let counter = counter.clone();
+    let on_skip = {
+        let skipped = skipped.clone();
         Callback::from(move |_| {
-            counter.set(*counter - 1);
+            skipped.set(*skipped + 1);
+            console::log_1(&format!("Skipped: {}", *skipped + 1).into());
         })
     };
 
@@ -64,7 +55,7 @@ fn app() -> Html {
             <div class="row">
                 // Left column — Skip button (red)
                 <div class="side-col">
-                    <button class="side-button button-skip" onclick={on_dec.clone()}>{ "Skip" }</button>
+                    <button class="side-button button-skip" onclick={on_skip.clone()}>{ "Skip" }</button>
                 </div>
 
                 // Center column — split into three vertical sections
@@ -84,13 +75,13 @@ fn app() -> Html {
 
                     // Bottom section: Counter
                     <div class="center-bottom">
-                        <div class="counter">{ format!("Count: {}", *counter) }</div>
+                        <div class="counter">{ format!("Skipped: {} | Correct: {}", *skipped, *correct) }</div>
                     </div>
                 </div>
 
                 // Right column — Correct button (green)
                 <div class="side-col">
-                    <button class="side-button button-correct" onclick={on_inc.clone()}>{ "Correct" }</button>
+                    <button class="side-button button-correct" onclick={on_correct.clone()}>{ "Correct" }</button>
                 </div>
             </div>
         </div>
