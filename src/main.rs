@@ -77,7 +77,8 @@ fn app() -> Html {
 
                     // Bottom section: Counter
                     <div class="center-bottom">
-                        <div class="counter">{ format!("Skipped: {} | Correct: {}", *skipped, *correct) }</div>
+                        <div class="counter-left">{ format!("Skipped: {}", *skipped) }</div>
+                        <div class="counter-right">{ format!("Correct: {}", *correct) }</div>
                     </div>
                 </div>
 
