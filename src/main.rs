@@ -1,9 +1,11 @@
 use yew::prelude::*;
 use web_sys::console;
+use gloo_timers::callback::Interval;
 
 #[function_component(App)]
 fn app() -> Html {
     let counter = use_state(|| 0i32);
+    let timer = use_state(|| 0u32); // Timer in tenths of seconds
 
     {
         // Log to the browser console whenever the counter changes
@@ -13,6 +15,22 @@ fn app() -> Html {
             move |c| {
                 console::log_1(&format!("Counter changed: {}", *c).into());
                 || ()
+            },
+        );
+    }
+
+    {
+        // Timer that increments every 100ms (tenth of a second)
+        let timer = timer.clone();
+        use_effect_with(
+            (),
+            move |_| {
+                let interval = Interval::new(100, move || {
+                    timer.set(*timer + 1);
+                });
+                
+                // Return cleanup function that cancels the interval
+                move || drop(interval)
             },
         );
     }
@@ -41,12 +59,24 @@ fn app() -> Html {
                     <button class="side-button" onclick={on_dec.clone()}>{ "←" }</button>
                 </div>
 
-                // Center column — take remaining space, center the counter
+                // Center column — split into three vertical sections
                 <div class="center-col">
-                    <div class="center-content">
-                        <h1>{ "Hello from Yew!" }</h1>
-                        <p>{ "This is a minimal Yew+Trunk starter." }</p>
-                        <strong>{ format!("Count: {}", *counter) }</strong>
+                    // Top section: Timer (in tenths of seconds)
+                    <div class="center-top">
+                        <div class="timer">{ format!("{:.1}", *timer as f32 / 10.0) }</div>
+                    </div>
+
+                    // Middle section: Game content placeholder
+                    <div class="center-middle">
+                        <div>
+                            <h1>{ "Hello from Yew!" }</h1>
+                            <p>{ "This is a minimal Yew+Trunk starter." }</p>
+                        </div>
+                    </div>
+
+                    // Bottom section: Counter
+                    <div class="center-bottom">
+                        <div class="counter">{ format!("Count: {}", *counter) }</div>
                     </div>
                 </div>
 
