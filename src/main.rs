@@ -62,9 +62,9 @@ fn app() -> Html {
         <div class="app-container">
 
             <div class="row">
-                // Left column — 20% width, button fills the whole column
+                // Left column — Skip button (red)
                 <div class="side-col">
-                    <button class="side-button" onclick={on_dec.clone()}>{ "←" }</button>
+                    <button class="side-button button-skip" onclick={on_dec.clone()}>{ "Skip" }</button>
                 </div>
 
                 // Center column — split into three vertical sections
@@ -88,9 +88,9 @@ fn app() -> Html {
                     </div>
                 </div>
 
-                // Right column — 20% width, button fills the whole column
+                // Right column — Correct button (green)
                 <div class="side-col">
-                    <button class="side-button" onclick={on_inc.clone()}>{ "→" }</button>
+                    <button class="side-button button-correct" onclick={on_inc.clone()}>{ "Correct" }</button>
                 </div>
             </div>
         </div>

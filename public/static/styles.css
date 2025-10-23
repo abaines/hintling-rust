@@ -42,6 +42,34 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button-skip {
+  background-color: #dc3545;
+}
+
+.button-skip:hover {
+  background-color: #c82333;
+}
+
+.button-skip:active {
+  background-color: #bd2130;
+}
+
+.button-correct {
+  background-color: #28a745;
+}
+
+.button-correct:hover {
+  background-color: #218838;
+}
+
+.button-correct:active {
+  background-color: #1e7e34;
 }
 
 .center-col {
