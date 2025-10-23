@@ -36,12 +36,23 @@ fn app() -> Html {
             <h1>{ "Hello from Yew!" }</h1>
             <p>{ "This is a minimal Yew+Trunk starter." }</p>
 
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 320px; margin-top: 12px;">
-                <button onclick={on_dec.clone()}>{ "←" }</button>
-                <div style="min-width: 120px; text-align: center;">
-                    <strong>{ format!("Count: {}", *counter) }</strong>
+            <div style="display: flex; width: 100%; height: 64vh; margin-top: 12px;">
+                // Left column — 20% width, button fills the whole column
+                <div style="width: 20%; display: flex; align-items: center; justify-content: center;">
+                    <button style="width: 100%; height: 100%; font-size: 24px; padding: 12px 16px; display:flex; align-items:center; justify-content:center;" onclick={on_dec.clone()}>{ "←" }</button>
                 </div>
-                <button onclick={on_inc.clone()}>{ "→" }</button>
+
+                // Center column — take remaining space, center the counter
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <strong style="font-size: 20px;">{ format!("Count: {}", *counter) }</strong>
+                    </div>
+                </div>
+
+                // Right column — 20% width, button fills the whole column
+                <div style="width: 20%; display: flex; align-items: center; justify-content: center;">
+                    <button style="width: 100%; height: 100%; font-size: 24px; padding: 12px 16px; display:flex; align-items:center; justify-content:center;" onclick={on_inc.clone()}>{ "→" }</button>
+                </div>
             </div>
         </div>
     }
